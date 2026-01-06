@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 public interface LinkRepository extends JpaRepository<Link, String> {
-    @Query("SELECT l.originalUrl FROM Link l WHERE l.shortUrl = :")
+    @Query("SELECT l.originalUrl FROM Link l WHERE l.shortUrl = :shortUrl")
     String findLongUrlByShortUrl(String shortUrl);
 }
