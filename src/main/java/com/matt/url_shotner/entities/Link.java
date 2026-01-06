@@ -16,6 +16,9 @@ import java.time.LocalDateTime;
 @Table(name = "links")
 public class Link {
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private int id;
+
     private String shortUrl;
 
     @Column(nullable = false)
