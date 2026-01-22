@@ -1,6 +1,6 @@
 package com.matt.url_shotner.controllers;
 
-import com.matt.url_shotner.dtos.CreateLinkRequest;
+import com.matt.url_shotner.dtos.request.CreateLinkRequest;
 import com.matt.url_shotner.services.LinkService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-import java.util.UUID;
 
 @RestController
 @AllArgsConstructor
