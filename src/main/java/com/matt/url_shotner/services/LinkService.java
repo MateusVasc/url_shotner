@@ -20,7 +20,7 @@ public class LinkService {
     private final Base62EncodingService encodingService;
 
     public String findOriginalLongUrl(String shortUrl) {
-        Link link = linkRepository.findById(shortUrl).orElseThrow(() -> new InternalException(ExceptionType.LINK_NOT_FOUND_EXCEPTION));
+        Link link = this.linkRepository.findById(shortUrl).orElseThrow(() -> new InternalException(ExceptionType.LINK_NOT_FOUND_EXCEPTION));
         return link.getOriginalUrl();
     }
 
@@ -28,19 +28,19 @@ public class LinkService {
         Link linkToSave = new Link();
 
         if (userId != null) {
-            User owner = userRepository.findById(userId).orElseThrow(() -> new InternalException(ExceptionType.USER_NOT_FOUND_EXCEPTION));
+            User owner = this.userRepository.findById(userId).orElseThrow(() -> new InternalException(ExceptionType.USER_NOT_FOUND_EXCEPTION));
             linkToSave.setOwner(owner);
         }
 
         linkToSave.setOriginalUrl(longUrl);
         linkToSave.setCreatedAt(LocalDateTime.now());
 
-        Link savedLink = linkRepository.save(linkToSave);
+        Link savedLink = this.linkRepository.save(linkToSave);
 
-        String shortUrl = encodingService.base62EncodeUrl(savedLink.getId());
+        String shortUrl = this.encodingService.base62EncodeUrl(savedLink.getId());
         savedLink.setShortUrl(shortUrl);
 
-        linkRepository.save(savedLink);
+        this.linkRepository.save(savedLink);
 
         return shortUrl;
     }

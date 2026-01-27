@@ -17,13 +17,13 @@ public class LinkController {
     @GetMapping("/links/{shortUrl}")
     public ResponseEntity<String> getLongUrl(@PathVariable String shortUrl) {
         return ResponseEntity.status(HttpStatus.FOUND)
-                .location(URI.create(linkService.findOriginalLongUrl(shortUrl)))
+                .location(URI.create(this.linkService.findOriginalLongUrl(shortUrl)))
                 .build();
     }
 
     @PostMapping("/links")
     public ResponseEntity<String> createShortUrl(@RequestBody CreateLinkRequest req) {
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(linkService.createShortUrl(req.userId(), req.longUrl()));
+                .body(this.linkService.createShortUrl(req.userId(), req.longUrl()));
     }
 }
