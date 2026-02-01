@@ -11,17 +11,18 @@ import java.net.URI;
 
 @RestController
 @AllArgsConstructor
+@RequestMapping("/api/urls")
 public class LinkController {
     private final LinkService linkService;
 
-    @GetMapping("/links/{shortUrl}")
+    @GetMapping("/{shortUrl}")
     public ResponseEntity<String> getLongUrl(@PathVariable String shortUrl) {
         return ResponseEntity.status(HttpStatus.FOUND)
                 .location(URI.create(this.linkService.findOriginalLongUrl(shortUrl)))
                 .build();
     }
 
-    @PostMapping("/links")
+    @PostMapping("/")
     public ResponseEntity<String> createShortUrl(@RequestBody CreateLinkRequest req) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(this.linkService.createShortUrl(req.userId(), req.longUrl()));
