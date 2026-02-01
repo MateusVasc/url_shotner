@@ -1,4 +1,4 @@
-package com.matt.url_shotner.security;
+package com.matt.url_shotner.infra.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
