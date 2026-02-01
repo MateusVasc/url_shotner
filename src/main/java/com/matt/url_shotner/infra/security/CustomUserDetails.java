@@ -1,7 +1,6 @@
-package com.matt.url_shotner.security;
+package com.matt.url_shotner.infra.security;
 
 import com.matt.url_shotner.entities.User;
-import org.jspecify.annotations.Nullable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -32,7 +31,7 @@ public class CustomUserDetails implements UserDetails {
     }
 
     @Override
-    public @Nullable String getPassword() {
+    public String getPassword() {
         return password;
     }
 

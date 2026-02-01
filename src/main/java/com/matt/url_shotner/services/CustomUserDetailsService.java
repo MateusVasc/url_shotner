@@ -1,10 +1,8 @@
 package com.matt.url_shotner.services;
 
 import com.matt.url_shotner.entities.User;
-import com.matt.url_shotner.enums.ExceptionType;
-import com.matt.url_shotner.exceptions.InternalException;
 import com.matt.url_shotner.repositories.UserRepository;
-import com.matt.url_shotner.security.CustomUserDetails;
+import com.matt.url_shotner.infra.security.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,7 +16,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByEmail(username).orElseThrow(() -> new InternalException(ExceptionType.USER_NOT_FOUND_EXCEPTION));
+        User user = userRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("There is no user with the given e-mail"));
         return CustomUserDetails.build(user);
     }
 }
