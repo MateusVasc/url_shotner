@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -53,6 +54,22 @@ public class AuthService {
     }
 
     public LoginResponse refresh(String refreshToken) {
-        return new LoginResponse("a", "a");
+        RefreshToken token = refreshTokenService.getToken(refreshToken);
+
+        if (token.getIsRevoked()) throw new InternalException(ExceptionType.INVALID_TOKEN);
+
+        if (token.getExpiresAt().isAfter(LocalDateTime.now())) throw new InternalException(ExceptionType.INVALID_TOKEN);
+
+        String email = jwtUtils.validateToken(refreshToken);
+        if (!Objects.equals(email, token.getUser().getEmail())) throw new InternalException(ExceptionType.INVALID_TOKEN);
+
+        CustomUserDetails customUserDetails = CustomUserDetails.build(token.getUser());
+        String newAccessToken = jwtUtils.generateAccessToken(customUserDetails);
+        String newRefreshToken = jwtUtils.generateRefreshToken(customUserDetails);
+
+        token.setIsRevoked(Boolean.TRUE);
+        refreshTokenService.updateToken(token);
+
+        return new LoginResponse(newAccessToken, newRefreshToken);
     }
 }

@@ -56,14 +56,14 @@ public class JwtUtils {
         }
     }
 
-    public String validateAccessToken(String accessToken) {
+    public String validateToken(String token) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secretKey);
 
             return JWT.require(algorithm)
                     .withIssuer(issuer)
                     .build()
-                    .verify(accessToken)
+                    .verify(token)
                     .getSubject();
         } catch (JWTVerificationException e) {
             throw new InternalException(ExceptionType.INVALID_TOKEN);

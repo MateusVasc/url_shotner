@@ -38,6 +38,14 @@ public class RefreshTokenService {
         refreshTokenRepository.save(refreshTokenToSave);
     }
 
+    public RefreshToken getToken(String token) {
+        return refreshTokenRepository.findByToken(token).orElseThrow(() -> new InternalException(ExceptionType.INVALID_TOKEN));
+    }
+
+    public void updateToken(RefreshToken token) {
+        refreshTokenRepository.save(token);
+    }
+
     public void revokeAllTokens(List<RefreshToken> tokens) {
         for (RefreshToken t : tokens) {
             t.setIsRevoked(Boolean.TRUE);

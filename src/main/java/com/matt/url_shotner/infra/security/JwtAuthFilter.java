@@ -33,7 +33,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         accessToken = accessToken.replace("Bearer ", "");
 
-        String email = this.jwtUtils.validateAccessToken(accessToken);
+        String email = this.jwtUtils.validateToken(accessToken);
 
         Optional<User> optUser = this.userRepository.findByEmail(email);
 
